@@ -13,7 +13,7 @@ echo -e "\nTabla Campeonato Primera Division Argentina 2018-19"
 awk '{print $1,$2,$3,$4,$5,$6,$7,$8,$7-$8}' "Archivos de datos-20230816"/superliga.in | sort -n -k2r,2 -k9r,9 |awk '{print $1,$2,$3,$4,$5,$6,$7,$8}'
 echo -e "\n MAC address:"
 ip addr show wlo1 | grep -Eio " ([0-9a-f]{2}:){5}[0-9a-f]{2} "
-mkdir BlackSails && for i in {1..10}; do touch BlackSails/BS_S01E"$i"_es.srt; done && rename 's/_es//' BlackSails/*"_es"*.srt
+mkdir BlackSails && for i in {1..10}; do touch BlackSails/BS_S01E"$i"_es.srt; done && for file in BlackSails/*"_es"*.srt; do name=$(echo "$file" | sed 's/_es//'); mv "$file" "$name"; done
 echo
 ffmpeg -i agu.mkv -ss 5 -to 18 -c copy extra_a.mkv
 ffmpeg -i selva.mp3 -i gallina.flac -filter_complex "[0:a:0][1:a]amix=inputs=2:duration=longest[outa]" -map "[outa]" extra_b.mp3
